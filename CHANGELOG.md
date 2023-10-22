@@ -10,6 +10,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 ### Added
 
 - `From` method's unit tests
+- `New` method's unit tests
 
 ## [0.0.1-alpha.2] - 2023-10-22
 
