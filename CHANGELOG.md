@@ -14,3 +14,9 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 - `From` method.
 - `New` method.
 - `Push` method.
+
+## [0.0.1-alpha.2] - 2023-10-22
+
+### Fixed
+
+- `Find` method's description
