@@ -1,75 +1,73 @@
-package cake
+package cake_test
 
 import (
 	"reflect"
 	"testing"
+
+	cake "github.com/prettyboiiii/cake/slice"
 )
 
-type TestedType interface {
+type TestedSliceFromType interface {
 	int | string | any
 }
 
-type testCase[T TestedType] struct {
+type testSliceFromCase[T TestedSliceFromType] struct {
 	name     string
 	input    []T
-	expected Slice[T]
+	expected cake.Slice[T]
 }
 
-func TestGenerics(t *testing.T) {
-	testCases := []testCase[any]{
+func TestSliceFrom(t *testing.T) {
+	genericTestCases := []testSliceFromCase[any]{
 		{
 			name:     "mix types case",
 			input:    []any{1, "apple", 1.5, struct{}{}, []int{}, map[string]string{"1": "apple"}},
-			expected: Slice[any]{1, "apple", 1.5, struct{}{}, []int{}, map[string]string{"1": "apple"}},
+			expected: cake.Slice[any]{1, "apple", 1.5, struct{}{}, []int{}, map[string]string{"1": "apple"}},
 		},
 		{
 			name:     "empty slice case",
 			input:    []any{},
-			expected: Slice[any]{},
+			expected: cake.Slice[any]{},
 		},
 		{
 			name:     "large number slice case",
 			input:    make([]any, 10000),
-			expected: make(Slice[any], 10000),
+			expected: make(cake.Slice[any], 10000),
 		},
 	}
 
-	for _, tc := range testCases {
-		t.Run(tc.name, runTestCase(tc))
-	}
-}
-
-func TestInteger(t *testing.T) {
-	testCases := []testCase[int]{
+	intergerTestCases := []testSliceFromCase[int]{
 		{
-			name:     "normal case",
+			name:     "integer case",
 			input:    []int{1, 2, 3},
-			expected: Slice[int]{1, 2, 3},
+			expected: cake.Slice[int]{1, 2, 3},
 		},
 	}
 
-	for _, tc := range testCases {
-		t.Run(tc.name, runTestCase(tc))
-	}
-}
-
-func TestString(t *testing.T) {
-	testCases := []testCase[string]{
+	stringTestCases := []testSliceFromCase[string]{
 		{
-			name:     "normal case",
+			name:     "string case",
 			input:    []string{"apple", "banana", "cherry"},
-			expected: Slice[string]{"apple", "banana", "cherry"},
+			expected: cake.Slice[string]{"apple", "banana", "cherry"},
 		},
 	}
 
-	for _, tc := range testCases {
-		t.Run(tc.name, runTestCase(tc))
+	for _, tc := range genericTestCases {
+		t.Run(tc.name, runTestSliceFrom(tc))
+	}
+
+	for _, tc := range intergerTestCases {
+		t.Run(tc.name, runTestSliceFrom(tc))
+	}
+
+	for _, tc := range stringTestCases {
+		t.Run(tc.name, runTestSliceFrom(tc))
 	}
 }
 
-func runTestCase[T TestedType](tc testCase[T]) func(t *testing.T) {
+func runTestSliceFrom[T TestedSliceFromType](tc testSliceFromCase[T]) func(t *testing.T) {
 	return func(t *testing.T) {
-		result := From(tc.input)
+		result := cake.From(tc.input)
 		if len(result) != len(tc.expected) {
 			t.Errorf("Expected length %d, got %d", len(tc.expected), len(result))
 		}
