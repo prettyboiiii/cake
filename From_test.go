@@ -4,7 +4,7 @@ import (
 	"reflect"
 	"testing"
 
-	cake "github.com/prettyboiiii/cake/slice"
+	"github.com/prettyboiiii/cake"
 )
 
 type TestedSliceFromType interface {
